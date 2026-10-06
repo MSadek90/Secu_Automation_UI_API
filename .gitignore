@@ -1,0 +1,29 @@
+# Secrets & environment (never commit passwords or URLs)
+.env
+*.env
+config/*.properties
+!config/*.properties.example
+
+# Java / Maven / Gradle
+target/
+build/
+.gradle/
+*.class
+
+# IDE
+.idea/
+*.iml
+.vscode/
+
+# Test output & reports
+test-output/
+allure-results/
+allure-report/
+screenshots/
+
+# k6 results
+performance/results/
+
+# OS
+.DS_Store
+Thumbs.db
