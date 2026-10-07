@@ -12,15 +12,26 @@
 
 ## Phase 1 — Reading Plan
 
-**Selenium** ([Test Practices](https://www.selenium.dev/documentation/test_practices/))
+Pages are studied when they are about to be applied: framework-design fundamentals before implementation, the rest during the build.
 
-- [ ] Overview
-- [ ] Testing Types
-- [ ] Design Strategies + Page Object Models
-- [ ] Locators
-- [ ] Generating Application State + Avoid Sharing State + Test Independency
-- [ ] Fresh Browser per Test + Improved Reporting
-- [ ] Discouraged Behaviors
+**Before implementation** — [Selenium docs](https://www.selenium.dev/documentation/)
+
+- [x] Test Practices: Overview
+- [x] Test Practices: Testing Types
+- [ ] Encouraged: Page Object Models
+- [ ] Test Practices: Design Strategies (builds on Page Objects)
+- [ ] Encouraged: Locators
+- [ ] WebDriver: Waits
+- [ ] Encouraged: Generating Application State
+- [ ] Encouraged: Avoid Sharing State · Test Independency · Fresh Browser per Test
+- [ ] Discouraged (all)
+- [ ] AI Agents → project rules file (`CLAUDE.md`)
+
+**During the build**
+
+- [ ] Encouraged: Improved Reporting (when selecting the reporting tool)
+- [ ] Encouraged: Mock External Services (if isolating third-party services)
+- [ ] Encouraged: Domain Specific Language · Fluent API (as the suite grows)
 
 **k6** ([Docs](https://grafana.com/docs/k6/latest/)) — Phase 4
 
@@ -28,6 +39,12 @@
 - [ ] Test Types
 - [ ] Thresholds
 - [ ] Automated Performance Testing
+
+## Pending Decisions
+
+- [ ] Browser matrix
+- [ ] Test data setup strategy (form requests via REST Assured vs. direct DB)
+- [ ] BDD layer (Cucumber): adopt or not
 
 ## Open Items
 
