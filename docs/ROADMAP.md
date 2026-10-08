@@ -18,20 +18,21 @@ Pages are studied when they are about to be applied: framework-design fundamenta
 
 - [x] Test Practices: Overview
 - [x] Test Practices: Testing Types
-- [ ] Encouraged: Page Object Models
+- [x] Encouraged: Page Object Models
 - [ ] Test Practices: Design Strategies (builds on Page Objects)
-- [ ] Encouraged: Locators
+- [x] Encouraged: Locators
 - [ ] WebDriver: Waits
-- [ ] Encouraged: Generating Application State
-- [ ] Encouraged: Avoid Sharing State · Test Independency · Fresh Browser per Test
+- [x] Encouraged: Generating Application State
+- [x] Encouraged: Avoid Sharing State · Test Independency · Fresh Browser per Test
 - [ ] Discouraged (all)
 - [ ] AI Agents → project rules file (`CLAUDE.md`)
 
 **During the build**
 
-- [ ] Encouraged: Improved Reporting (when selecting the reporting tool)
-- [ ] Encouraged: Mock External Services (if isolating third-party services)
-- [ ] Encouraged: Domain Specific Language · Fluent API (as the suite grows)
+- [x] Encouraged: Improved Reporting
+- [x] Encouraged: Mock External Services
+- [x] Encouraged: Domain Specific Language
+- [x] Encouraged: Fluent API
 
 **k6** ([Docs](https://grafana.com/docs/k6/latest/)) — Phase 4
 

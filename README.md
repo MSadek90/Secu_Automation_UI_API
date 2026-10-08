@@ -25,6 +25,7 @@ Automated UI, API and performance testing for **SECU**, a security-guard managem
 .
 ├── docs/
 │   ├── TEST_STRATEGY.md   # scope, levels, suites, environments, data rules
+│   ├── FRAMEWORK_RULES.md # coding rules from the official docs
 │   ├── ROADMAP.md         # phases and current status
 │   └── adr/               # architecture decision records
 ├── src/test/java/         # UI + API tests            (Phase 2)
@@ -39,5 +40,6 @@ Automated UI, API and performance testing for **SECU**, a security-guard managem
 ## Documentation
 
 - [Test Strategy](docs/TEST_STRATEGY.md)
+- [Framework Rules](docs/FRAMEWORK_RULES.md)
 - [Roadmap](docs/ROADMAP.md)
 - [Architecture Decision Records](docs/adr/)
