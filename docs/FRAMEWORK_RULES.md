@@ -16,7 +16,7 @@ Rules are added as each documentation page is studied. Items marked **Team decis
 | R-04 | Create test data (users, records) through the API or database **before** the browser launches. The browser starts with the data already "in hand". | [Overview](https://www.selenium.dev/documentation/test_practices/overview/) |
 | R-05 | Tests are written in user/business language. No buttons, fields, locators or browser controls inside test methods. | [Overview](https://www.selenium.dev/documentation/test_practices/overview/) |
 | R-06 | Do not automate UI that will change considerably in the near future. Under a tight deadline with no existing automation, test manually first. | [Overview](https://www.selenium.dev/documentation/test_practices/overview/) |
-| R-07 | Do not use Selenium for performance testing. Use the dedicated tool (k6, ADR-0003). | [Discouraged: Performance testing](https://www.selenium.dev/documentation/test_practices/discouraged/performance_testing/) |
+| R-07 | Do not use Selenium for performance testing. Use the dedicated tool (k6, ADR-0003). | [Performance Testing](https://www.selenium.dev/documentation/test_practices/discouraged/performance_testing/) — Selenium timings mix in browser, network, third-party and WebDriver overhead; functional and performance goals conflict |
 
 ## Page Objects
 
@@ -67,7 +67,7 @@ Rules are added as each documentation page is studied. Items marked **Team decis
 | R-25 | Tests never share test data. Each test creates (or exclusively owns) the records it acts on; no test picks "any existing record" from the database. | [Avoid Sharing State](https://www.selenium.dev/documentation/test_practices/encouraged/avoid_sharing_state/) |
 | R-26 | Each test cleans up the data it created; stale data left by failed runs is cleaned before execution. | [Avoid Sharing State](https://www.selenium.dev/documentation/test_practices/encouraged/avoid_sharing_state/) |
 | R-27 | A new `WebDriver` instance is created for every test (`@BeforeEach`) and always quit after it, pass or fail (`@AfterEach`). Each instance uses the driver's fresh temporary profile; never a personal or persisted profile (`--user-data-dir`). | [Avoid Sharing State](https://www.selenium.dev/documentation/test_practices/encouraged/avoid_sharing_state/), [Fresh Browser per Test](https://www.selenium.dev/documentation/test_practices/encouraged/fresh_browser_per_test/) |
-| R-30 | Tests never depend on another test having run, its result, or execution order. When a feature consumes data produced elsewhere after an async sync, the consumer test creates its own stub state; the producer is covered by a separate test. Verifying the sync itself is a dedicated integration test with a bounded wait. | [Test Independency](https://www.selenium.dev/documentation/test_practices/encouraged/test_independency/) (sync test: **Team decision**) |
+| R-30 | Tests never depend on another test having run, its result, or execution order. When a feature consumes data produced elsewhere after an async sync, the consumer test creates its own stub state; the producer is covered by a separate test. Verifying the sync itself is a dedicated integration test with a bounded wait. Tests must pass in any order; `@TestMethodOrder`/`@Order` are never used to chain tests. | [Test Independency](https://www.selenium.dev/documentation/test_practices/encouraged/test_independency/) (sync test: **Team decision**), [Test Dependency](https://www.selenium.dev/documentation/test_practices/discouraged/test_dependency/) |
 
 ## Locators
 
@@ -75,6 +75,16 @@ Rules are added as each documentation page is studied. Items marked **Team decis
 |---|---|---|
 | R-28 | Locator priority: **ID** (only if unique and stable — never auto-generated) → **CSS selector** → **XPath** only when nothing else works. `linkText` only for links. `tagName` only with `findElements` or inside a component root where it is unique. | [Locators](https://www.selenium.dev/documentation/test_practices/encouraged/locators/) |
 | R-29 | Locators are short and readable (no absolute XPath). Narrow the search scope: locate a container once and search within it. | [Locators](https://www.selenium.dev/documentation/test_practices/encouraged/locators/) |
+
+## Discouraged Practices
+
+| ID | Rule | Source |
+|---|---|---|
+| R-31 | Do not verify file downloads through the browser. Read the download URL with Selenium, then fetch it with an HTTP client (REST Assured) using the browser's session cookie, and assert status, content type and content. If the file is generated client-side (no URL), test the generating API directly. | [File Downloads](https://www.selenium.dev/documentation/test_practices/discouraged/file_downloads/) (client-side case: **Team decision**) |
+| R-32 | UI tests do not assert HTTP status codes. `BasePage` fails fast on error pages (404/500) by checking the page title or `<h1>` on construction. Status codes are verified in API tests (REST Assured); no proxy is used. | [HTTP Response Codes](https://www.selenium.dev/documentation/test_practices/discouraged/http_response_codes/) (no proxy: **Team decision**) |
+| R-33 | Never log into third-party sites (email providers, social networks) through the browser. Verify emails through an email API or a test mail catcher; use provider APIs for test accounts. | [Gmail, Email and Facebook Logins](https://www.selenium.dev/documentation/test_practices/discouraged/gmail_email_and_facebook_logins/) |
+| R-34 | Link crawling / broken-link checks use HTTP requests and an HTML parser (Jsoup), not WebDriver. Only links rendered by JavaScript are collected with Selenium, then verified over HTTP. | [Link Spidering](https://www.selenium.dev/documentation/test_practices/discouraged/link_spidering/) (JS-rendered case: **Team decision**) |
+| R-35 | Never automate reading real OTPs (SMS, email, authenticator apps). OTP/2FA flows are tested with a fixed test code that works only in the test environment for designated test accounts; all other tests log in via API (R-22) or with automation users exempt from 2FA. The test code is never valid in production and never committed. | [Two Factor Authentication](https://www.selenium.dev/documentation/test_practices/discouraged/two_factor_authentication/) (option choice: **Team decision**) |
 
 ---
 

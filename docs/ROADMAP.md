@@ -24,7 +24,7 @@ Pages are studied when they are about to be applied: framework-design fundamenta
 - [ ] WebDriver: Waits
 - [x] Encouraged: Generating Application State
 - [x] Encouraged: Avoid Sharing State · Test Independency · Fresh Browser per Test
-- [ ] Discouraged (all)
+- [x] Discouraged (all applicable pages)
 - [ ] AI Agents → project rules file (`CLAUDE.md`)
 
 **During the build**
