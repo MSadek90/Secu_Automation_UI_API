@@ -19,13 +19,13 @@ Pages are studied when they are about to be applied: framework-design fundamenta
 - [x] Test Practices: Overview
 - [x] Test Practices: Testing Types
 - [x] Encouraged: Page Object Models
-- [ ] Test Practices: Design Strategies (builds on Page Objects)
+- [x] Test Practices: Design Strategies (builds on Page Objects)
 - [x] Encouraged: Locators
-- [ ] WebDriver: Waits
+- [x] WebDriver: Waits
 - [x] Encouraged: Generating Application State
 - [x] Encouraged: Avoid Sharing State · Test Independency · Fresh Browser per Test
 - [x] Discouraged (all applicable pages)
-- [ ] AI Agents → project rules file (`CLAUDE.md`)
+- [x] AI Agents → project rules file (`CLAUDE.md`, first version; update after Waits)
 
 **During the build**
 
@@ -45,7 +45,7 @@ Pages are studied when they are about to be applied: framework-design fundamenta
 
 - [ ] Browser matrix
 - [ ] Test data setup strategy (form requests via REST Assured vs. direct DB)
-- [ ] BDD layer (Cucumber): adopt or not
+- [x] BDD layer (Cucumber): not adopted (ADR-0005)
 
 ## Open Items
 

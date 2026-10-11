@@ -88,9 +88,22 @@ Rules are added as each documentation page is studied. Items marked **Team decis
 
 ---
 
+## Design Strategies
+
+| ID | Rule | Source |
+|---|---|---|
+| R-36 | Raw browser actions (click, type) and waits live in utility classes under `utils/` (`Actions`, `Waits`). Pages and components **use** them through an instance field (composition); they never extend them. `BasePage` / `BaseComponent` create them once, so each page does not repeat it. Utility methods do exactly what their name says, with no hidden side effects (e.g. `type` must not press Enter). | [Design Strategies: Bot Pattern](https://www.selenium.dev/documentation/test_practices/design_strategies/) (**Team decision**: composition over inheritance, no hidden Enter) |
+| R-37 | Each page exposes a static `open(...)` method that holds its URL in one place and returns the page; the constructor verifies the page is loaded (R-12). `LoadableComponent` is not used: login is done by API (R-22) so there is no parent-page chain. | [Design Strategies: LoadableComponent](https://www.selenium.dev/documentation/test_practices/design_strategies/) (**Team decision**) |
+| R-38 | Browsers are created only by a `DriverFactory` (Factory pattern) that returns a `WebDriver` for the browser named in configuration (default: Chrome). Each browser is configured with its own `Options` class. Tests and pages never call `new ChromeDriver()` directly. | [Fresh Browser per Test](https://www.selenium.dev/documentation/test_practices/encouraged/fresh_browser_per_test/) (**Team decision**: factory, Chrome first, others added later) |
+| R-39 | Test data is created through the application's own HTTP routes with REST Assured (session cookie + CSRF token), before the browser starts. The database is used only for cleanup and verification, never to create data. | [Generating Application State](https://www.selenium.dev/documentation/test_practices/encouraged/generating_application_state/) (**Team decision**: mechanism) |
+| R-40 | AI-written code is based only on the current documentation, runnable examples, or existing repo code, never on memory or guesses. If the answer is not found there, the agent stops and asks. For each Selenium API used, the supporting documentation page is listed. | [Using AI coding agents with Selenium](https://www.selenium.dev/documentation/ai_agents/) (**Team decision**: stop-and-ask, sources listed) |
+| R-41 | Explicit waits only. The implicit wait is never set (it stays at its default of 0), because mixing the two gives unpredictable wait times. A wait always targets the condition the next step depends on, never a duration. | [Waiting Strategies](https://www.selenium.dev/documentation/webdriver/waits/) (explicit-only: **Team decision**) |
+| R-42 | All waiting goes through the `Waits` utility (R-36), built on the Wait classes shown in the documentation (`WebDriverWait`; `FluentWait` when polling interval, ignored exceptions, timeout or message must be customized). The timeout is one configurable value (default 10 s, **Team decision**). Actions are performed after the wait returns, not inside the wait condition. | [Waiting Strategies](https://www.selenium.dev/documentation/webdriver/waits/) (action-outside-wait: **Team decision**) |
+| R-43 | A page's constructor verifies it is loaded by waiting (explicit wait, R-41) for a critical element of that page to be displayed. The page title alone is not enough, because the page can finish loading before its JavaScript has added the elements. | [Waiting Strategies](https://www.selenium.dev/documentation/webdriver/waits/) (readyState covers only assets in the HTML) |
+
+---
+
 ## Pending (decided after the related page is studied)
 
-- Page-loaded check: page title vs. waiting for a critical element → after **Waits**
-- Reporting tool (Allure proposed) → ADR-0004
+- Exact methods of `Actions` and `Waits` (R-36): signatures are taken from the Java API docs when the classes are built; `ExpectedConditions` is mentioned by the docs without an example, so it is not used until confirmed
 - Which external services to mock, and the mocking tool → during framework design
-- Exact test data setup mechanism (available APIs, cookie-based login) → when the `data/` layer is designed
