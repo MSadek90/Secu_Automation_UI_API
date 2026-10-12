@@ -3,7 +3,7 @@
 | Phase | Goal | Deliverable | Status |
 |---|---|---|---|
 | 0. Setup | Tooling decisions, repository | ADR-0001..0003, this repo | ✅ Done |
-| 1. Design | Framework design from official docs | Framework design + ADRs (build tool, runner, reporting, locators) | 🔄 In progress |
+| 1. Design | Framework design from official docs | Framework design + ADRs (build tool, runner, reporting, locators) | ✅ Done |
 | 2. Walking skeleton | One test running end-to-end in CI | Green CI pipeline | ⏳ |
 | 3. Expansion | Smoke → API → Regression | Smoke suite running on every deployment | ⏳ |
 | 4. Performance | k6 scenarios | Capacity report | ⏳ |
@@ -43,9 +43,11 @@ Pages are studied when they are about to be applied: framework-design fundamenta
 
 ## Pending Decisions
 
-- [ ] Browser matrix
-- [ ] Test data setup strategy (form requests via REST Assured vs. direct DB)
 - [x] BDD layer (Cucumber): not adopted (ADR-0005)
+- [x] Browser matrix: `DriverFactory`, Chrome first (R-38)
+- [x] Test data setup: REST Assured form requests (R-39)
+- [ ] Parallel test execution: in the plan, designed after the first tests run
+- [x] Cleanup mechanism: HTTP delete (ADR-0007); verify soft vs. hard delete before the project-creation test
 
 ## Open Items
 

@@ -3,7 +3,8 @@
 Rules for AI coding agents working in this repository (SECU UI + API test automation).
 
 ## Project
-- Language and stack: Java, Selenium WebDriver, JUnit 5, REST Assured. Load testing is separate (k6, ADR-0003).
+- Language and stack: Java 23, Maven, Selenium WebDriver, JUnit 5, REST Assured, Allure. Load testing is separate (k6, ADR-0003).
+- Root package: `com.secu.qa`. Framework code (config, driver, utils, pages, api, data) lives in `src/main/java`; tests only in `src/test/java` (ADR-0006).
 - Target: the **demo/test environment only**. Never run tests against Live/production.
 - **Source of truth:** `docs/FRAMEWORK_RULES.md` (rules R-01 onward, each with its source). If this file and the rules file disagree, the rules file wins.
 - If a rule does not exist for what you are about to do, **ask**. Do not invent a convention.
@@ -43,10 +44,10 @@ Rules for AI coding agents working in this repository (SECU UI + API test automa
 - Verify a locator against the running application. Never infer it from what a form "usually" looks like.
 
 ## Structure
-- `tests/` business steps and all assertions. `pages/` one class per page, `pages/components/` repeated parts, `utils/` `Actions` and `Waits`, `data/` test-data setup.
+- `src/test/java` holds only tests (business steps and all assertions); everything below is framework code in `src/main/java`. `pages/` one class per page, `pages/components/` repeated parts, `utils/` `ActionBot` and `Waits`, `data/` test-data setup.
 - Pages: no assertions (R-11), no exposed `WebElement` or `WebDriver` (R-09, R-10), services named in business language (R-20), return the next page or `this` (R-13).
 - Each page has a static `open(...)` holding its URL; the constructor waits for a critical element of the page to be displayed (R-12, R-37, R-43); the title alone is not enough. Do not use `LoadableComponent`.
-- `Actions` and `Waits` are used through instance fields created once in `BasePage` / `BaseComponent`. Pages never extend them (R-36). No hidden side effects in them (e.g. `type` must not press Enter).
+- `ActionBot` and `Waits` are used through instance fields created once in `BasePage` / `BaseComponent`. Pages never extend them (R-36). No hidden side effects in them (e.g. `type` must not press Enter).
 - Money values are `BigDecimal` (R-19).
 - Browsers come only from `DriverFactory` (R-38); never `new ChromeDriver()` in tests or pages. Chrome first; add others behind the factory only when asked.
 
@@ -76,8 +77,9 @@ Rules for AI coding agents working in this repository (SECU UI + API test automa
 - TODO: fill in the build/test commands (all tests, single test) when the project is scaffolded.
 
 ## Still undecided (do not invent, ask)
-- Exact method signatures of `Actions` and `Waits` (take them from the Java API docs; ask if not found).
+- Exact method signatures of `ActionBot` and `Waits` (take them from the Java API docs; ask if not found).
 - Which services to mock.
 
 ## Decided
+- Cleanup: through the application's HTTP delete routes, never the database (ADR-0007). Call delete once only: a second call on an already-deleted project restores it.
 - Reports: Allure (ADR-0004). No Cucumber/Gherkin (ADR-0005): tests are plain JUnit 5.

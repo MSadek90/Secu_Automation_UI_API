@@ -9,5 +9,7 @@ Each significant technical decision is recorded here. Records are never deleted;
 | [0003](0003-k6.md) | k6 for performance tests | Accepted |
 | [0004](0004-allure-reporting.md) | Allure for test reports | Accepted |
 | [0005](0005-no-cucumber.md) | No BDD layer (Cucumber) | Accepted |
+| [0006](0006-java-version-and-layout.md) | Java 23, framework in `src/main`, `ActionBot` | Accepted |
+| [0007](0007-cleanup-over-http.md) | Test data cleanup over HTTP | Accepted |
 
 New records use [TEMPLATE.md](TEMPLATE.md).
