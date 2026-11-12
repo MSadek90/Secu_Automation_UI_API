@@ -11,5 +11,9 @@ Each significant technical decision is recorded here. Records are never deleted;
 | [0005](0005-no-cucumber.md) | No BDD layer (Cucumber) | Accepted |
 | [0006](0006-java-version-and-layout.md) | Java 23, framework in `src/main`, `ActionBot` | Accepted |
 | [0007](0007-cleanup-over-http.md) | Test data cleanup over HTTP | Accepted |
+| [0008](0008-solid-and-settings-design.md) | SOLID principles and settings design | Accepted (settings part superseded by 0010) |
+| [0009](0009-remove-config-class.md) | No central Config class | Superseded by 0010 |
+| [0010](0010-settings-from-environment-only.md) | Settings from environment variables only | Accepted (extended by 0011) |
+| [0011](0011-local-env-file.md) | Local .env file with dotenv-java | Accepted |
 
 New records use [TEMPLATE.md](TEMPLATE.md).

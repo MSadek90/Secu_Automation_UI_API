@@ -19,6 +19,7 @@ build/
 test-output/
 allure-results/
 allure-report/
+.allure/
 screenshots/
 
 # k6 results
@@ -27,3 +28,7 @@ performance/results/
 # OS
 .DS_Store
 Thumbs.db
+
+
+#Ignore vscode AI rules
+.github\instructions\codacy.instructions.md

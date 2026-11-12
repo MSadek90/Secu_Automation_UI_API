@@ -1,24 +1,25 @@
 # Framework Structure
 
-Layout of the test project. Decisions: ADR-0006 (Java 23, Maven, framework in `src/main`, tests in `src/test`, `ActionBot`). Rules: [FRAMEWORK_RULES.md](FRAMEWORK_RULES.md).
+Layout of the test project. Decisions: ADR-0006 (Java 23, Maven, framework in `src/main`, tests in `src/test`, `ActionBot`), ADR-0008 (SOLID), ADR-0010 (settings from environment variables only). Rules: [FRAMEWORK_RULES.md](FRAMEWORK_RULES.md).
 
 ```
 Secu_Automation_UI_API/
-├── pom.xml                              # Maven: Selenium, REST Assured (compile); JUnit 5, Allure (test)
-├── .env.example                         # env var names only, no values
+├── pom.xml                              # Maven: Selenium, REST Assured (compile); JUnit 6, Allure (test)
+├── .env.example                         # names and defaults; copy to .env (ignored by git) (R-45)
 ├── CLAUDE.md
 ├── README.md
 ├── docs/
-│   ├── FRAMEWORK_RULES.md               # R-01..R-43
+│   ├── FRAMEWORK_RULES.md               # R-01..R-46
 │   ├── FRAMEWORK_STRUCTURE.md
 │   ├── ROADMAP.md
-│   └── adr/                             # 0001..0006
+│   ├── RUN_NOTES.md                     # problems met while running tests and how we handled them
+│   └── adr/                             # 0001..0011
 ├── src/
 │   ├── main/java/com/secu/qa/           # the framework
-│   │   ├── config/
-│   │   │   └── Config.java              # base url, browser, timeout, credentials from env
 │   │   ├── driver/
 │   │   │   └── DriverFactory.java       # the only place that creates a browser (R-38)
+│   │   ├── routes/
+│   │   │   └── Routes.java              # every URL path, shared by pages and api (R-37)
 │   │   ├── utils/
 │   │   │   ├── ActionBot.java           # click, type, text (R-36)
 │   │   │   └── Waits.java               # explicit waits only (R-41, R-42)
@@ -38,12 +39,12 @@ Secu_Automation_UI_API/
 │   │       └── Cleanup.java             # R-26 (HTTP delete, ADR-0007)
 │   └── test/
 │       ├── java/com/secu/qa/
+│       │   ├── ScreenshotOnFailure.java # attaches a screenshot to Allure when a test fails (R-24)
 │       │   ├── BaseTest.java            # @BeforeEach driver, @AfterEach quit (R-27)
 │       │   └── tests/
 │       │       ├── ui/                  # LoginTest, ProjectTest
 │       │       └── api/
 │       └── resources/
-│           ├── config.properties        # no secrets
 │           ├── allure.properties
 │           └── junit-platform.properties  # parallel execution: designed later
 ├── .github/workflows/ci.yml             # phase 2
@@ -52,7 +53,7 @@ Secu_Automation_UI_API/
 
 ## Flow of one test
 
-1. `BaseTest` creates a fresh browser through `DriverFactory` (R-27, R-38).
+1. `BaseTest` reads the environment variables it needs and creates a fresh browser through `DriverFactory.create(browser, headless)` (R-27, R-38, R-45).
 2. `data/` and `api/` prepare test data over HTTP before the browser opens a page (R-39).
 3. `AuthApi` logs in and returns the session cookies; the test adds them to the browser (R-22).
 4. The test calls `Page.open(...)`; the constructor waits for a critical element to be displayed (R-37, R-43).
@@ -65,4 +66,4 @@ Secu_Automation_UI_API/
 - Verify whether `ProjectController::destroy` is a soft or hard delete (ADR-0007).
 - Parallel execution: designed after the first tests run.
 - Which external services to mock (the code shows Pusher, Firebase, Mapbox).
-- Method signatures of `ActionBot` and `Waits` come from the Java API docs when the classes are built (R-40).
+- Allure `@Step` on page methods (R-24) needs the Allure annotations library available to `src/main`; the artifact name is checked in the Allure docs when `LoginPage` is built.

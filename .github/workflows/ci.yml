@@ -1,0 +1,45 @@
+name: Automation Tests Ui And Apis
+
+on:
+  push:
+    branches:
+      - main
+
+  pull_request:
+    branches: 
+      - main
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+
+    steps:
+        - name: Checkout code
+          uses: actions/checkout@v7
+
+        - name: Setup Java
+          uses: actions/setup-java@v6
+          
+          with:
+           distribution: 'temurin'
+           java-version: '23'
+
+        - name: Run Tests
+          env:
+            BASE_URL: ${{secrets.BASE_URL}}
+            ADMIN_EMAIL: ${{ secrets.ADMIN_EMAIL }}
+            ADMIN_PASSWORD: ${{ secrets.ADMIN_PASSWORD }}
+            HEADLESS: true
+          run: mvn test
+
+
+        - name: Build Allure report
+          if: ${{ !cancelled() }}
+          run: mvn allure:report
+
+        - name: Upload Allure report
+          if: ${{ !cancelled() }}
+          uses: actions/upload-artifact@v7
+          with:
+            name: allure-report
+            path: target/site/allure-maven-plugin/index.html

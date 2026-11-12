@@ -7,7 +7,7 @@
 Cucumber adds Gherkin feature files on top of the tests. The team does not have Cucumber experience, and business readability is already covered by domain-language page methods (R-20).
 
 ## Decision
-Do not use Cucumber. Tests are plain JUnit 5 methods written in business language.
+Do not use Cucumber. Tests are plain JUnit 6 methods written in business language.
 
 ## Alternatives Considered
 | Option | Pros | Cons |

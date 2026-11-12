@@ -26,4 +26,10 @@ The project contains framework code (pages, utilities, API clients) and tests. T
 
 ## Consequences
 - CI runner and local machines must use JDK 23 (not an LTS release).
-- `pom.xml`: Selenium and REST Assured at compile scope; JUnit 5 and Allure at test scope.
+- `pom.xml`: Selenium and REST Assured at compile scope; JUnit 6 and Allure at test scope.
+
+## Library versions (set in `pom.xml`, each with its source in a comment there)
+- Selenium 4.51.0: latest stable Java binding on selenium.dev/downloads.
+- REST Assured 6.1.0: latest on Maven Central. Other pages disagree (wiki 6.0.1, javadoc.io 5.5.7); the team chose the latest.
+- JUnit 6.1.3: latest stable on docs.junit.org (needs Java 17+ and Surefire 3.0.0+). Changed from JUnit 5 on 2026-10-12.
+- Allure 3.0.0 (`allure-jupiter`, works with JUnit 6 and 5) and AspectJ 1.9.25: allurereport.org/docs/junit5.

@@ -7,7 +7,7 @@
 CI needs a pass/fail exit code and per-test results; people need a readable report with steps and failure screenshots (R-24). Selenium does not report; the test framework does.
 
 ## Decision
-Allure Report on top of JUnit 5.
+Allure Report on top of JUnit 6.
 
 ## Alternatives Considered
 | Option | Pros | Cons |
