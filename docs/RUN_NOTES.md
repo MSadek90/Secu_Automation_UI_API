@@ -29,3 +29,13 @@ Problems found while running the tests, and how we handled them.
 **Cause:** not known. The tests were recorded (`target/allure-results` has 3 results with their steps) and the generated report folder shows 3 tests, but the page served by `allure:serve` loads data with 0 tests.
 
 **Fix:** switched the report to Allure 2 (`<reportVersion>2.39.0</reportVersion>` in the `allure-maven` plugin). `mvn allure:serve` now opens the report with all tests. In CI the report is generated with `allure:report`, not served.
+
+## 4. Login button covered again in CI (2026-11-12)
+
+**Problem:** in GitHub Actions both login tests failed with `ElementClickInterceptedException`, the same bar as note 1.
+
+**Cause:** in headless mode the browser window is short. Even at 80% the button stayed under the Debugbar. On a local machine the window takes the screen size, so it was not seen there.
+
+**Fix:** `DriverFactory` sets the window to 1920x1080 in headless mode with `driver.manage().window().setSize(...)`, after the driver is created. All 3 tests pass in CI.
+
+**Note:** the size must be set after `new ChromeDriver(options)`, and every option must be added before it. One run created the driver first, so Chrome started without `--headless=new` and exited (`session not created`).
