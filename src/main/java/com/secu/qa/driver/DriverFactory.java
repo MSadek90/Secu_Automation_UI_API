@@ -23,13 +23,21 @@ public final class DriverFactory {
 
     private static WebDriver chrome(boolean headless) {
         ChromeOptions options = new ChromeOptions();
-        WebDriver driver = new ChromeDriver(options);
+
+        
         // 80% scale keeps buttons near the bottom clear of a fixed bar on the demo pages
         options.addArguments("--force-device-scale-factor=0.8");
+
+
         if (headless) {
             options.addArguments("--headless=new");
+        }
+
+        WebDriver driver = new ChromeDriver(options);
+
+        if (headless) {
             // Ensure the window size is set for headless mode
-            driver.manage().window().setSize(new Dimension(1920, 1080));
+            driver.manage().window().setSize(new Dimension(1920, 1080));    
         }
         return driver;
     }
