@@ -1,5 +1,6 @@
 package com.secu.qa.driver;
 
+import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -22,11 +23,14 @@ public final class DriverFactory {
 
     private static WebDriver chrome(boolean headless) {
         ChromeOptions options = new ChromeOptions();
+        WebDriver driver = new ChromeDriver(options);
         // 80% scale keeps buttons near the bottom clear of a fixed bar on the demo pages
         options.addArguments("--force-device-scale-factor=0.8");
         if (headless) {
             options.addArguments("--headless=new");
+            // Ensure the window size is set for headless mode
+            driver.manage().window().setSize(new Dimension(1920, 1080));
         }
-        return new ChromeDriver(options);
+        return driver;
     }
 }
