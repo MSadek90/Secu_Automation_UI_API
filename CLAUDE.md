@@ -56,6 +56,7 @@ Rules for AI coding agents working in this repository (SECU UI + API test automa
 
 ## Tests
 - One reason to exist per test, named after it (R-03). Set up data, act, then assert (R-02).
+- Before automating a case, check it against `docs/AUTOMATION_SELECTION.md` (R-47). Automate only cases marked Automate (API) or Automate (UI).
 - Check first whether the behavior can be tested through the API instead of the browser (R-01).
 - Test data and login are created through the application's HTTP routes with REST Assured (R-39) before the browser starts; the session cookie is added to the browser (R-04, R-21, R-22). Only login tests use the login UI.
 - A test never depends on another test or on order. No `@Order` chaining (R-30).
