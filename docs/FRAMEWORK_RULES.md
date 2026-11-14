@@ -113,6 +113,14 @@ Rules are added as each documentation page is studied. Items marked **Team decis
 
 ---
 
+## Automation Selection
+
+| ID | Rule | Source |
+|---|---|---|
+| R-47 | Not every test case is automated. Each manual case is checked against the four questions in `docs/AUTOMATION_SELECTION.md` (return on investment) and gets one recorded decision: Automate (API), Automate (UI), Manual, or Waiting (expected result not agreed). A case is automated only when its expected result is agreed and its data can be set up and cleaned up cheaply. | [Overview](https://www.selenium.dev/documentation/test_practices/overview/) (manual testing when the UI will change considerably) (questions and condition: **Team decision**) |
+
+---
+
 ## Pending (decided after the related page is studied)
 
 - `ActionBot` and `Waits` (R-36) are built from the Java API docs: `Waits` uses `WebDriverWait` + `ExpectedConditions` (`visibilityOfElementLocated`, `elementToBeClickable`); `ActionBot` receives `Waits` in its constructor and offers `click`, `type` (clear + sendKeys, no Enter), `text`. New methods are added only when a page needs them.
